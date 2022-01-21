@@ -20,7 +20,7 @@
     "sync": "browser-sync start --server --files \"dist/style.css, index.html\"",
     "start": "concurrently \"npm:sass.watch\" \"npm:browser-sync\"",
     "format": "prettier \"**/*.{scss,js,json,md,html}\" --write",
-    "doc": "node_modules/.bin/sassdoc \"**/*.scss\" --dest ./docs"
+    "docs": "node_modules/.bin/sassdoc \"**/*.scss\" --dest ./docs"
   },
   "prettier": {
     "printWidth": 100,

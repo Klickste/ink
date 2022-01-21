@@ -11,12 +11,30 @@
 ///
 /// @since 1.0.0
 /// @access public
-/// @param {number} $channelValue - Absolute RGB channel value (0-255).
+/// @param {number} $channelValue - Absolute RGB channel value `(0..255)`.
 /// @return {number}
-@function colorChannelRelative($channelValue) {
+@function calcColorChannelRelative($channelValue) {
   @if meta.type-of($channelValue) == 'number' {
     @if $channelValue >= 0 and $channelValue <= 255 {
       @return math.div(math.round(math.div($channelValue, 255) * 1000), 1000);
+    } @else {
+      @error 'Error not in range...';
+    }
+  } @else {
+    @error 'Error not a number...';
+  }
+}
+
+/// Convert an relative decimal RGB channel value to an absolute value.
+///
+/// @since 1.0.0
+/// @access public
+/// @param {number} $channelValue - Relative RGB channel value `(0..1)`.
+/// @return {number}
+@function calcColorChannelAbsolute($channelValue) {
+  @if meta.type-of($channelValue) == 'number' {
+    @if $channelValue >= 0 and $channelValue <= 1 {
+      @return math.round($channelValue * 255);
     } @else {
       @error 'Error not in range...';
     }
@@ -29,14 +47,14 @@
 ///
 /// @since 1.0.0
 /// @access public
-/// @param {color} $color - A color, supported by Sass.
-/// @require {function} colorChannelRelative
+/// @param {color} $color - A color.
+/// @require {function} calcColorChannelRelative
 /// @return {string}
-@function colorDisplayP3($color) {
+@function convertColorDisplayP3($color) {
   @if meta.type-of($color) == 'color' {
-    $red: colorChannelRelative(color.red($color));
-    $green: colorChannelRelative(color.green($color));
-    $blue: colorChannelRelative(color.blue($color));
+    $red: calcColorChannelRelative(color.red($color));
+    $green: calcColorChannelRelative(color.green($color));
+    $blue: calcColorChannelRelative(color.blue($color));
     $alpha: color.alpha($color) * 100%;
 
     @return color(display-p3 #{$red} #{$green} #{$blue} / #{$alpha});

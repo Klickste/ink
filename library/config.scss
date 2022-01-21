@@ -21,10 +21,14 @@ $useDarkMode: true !default;
 /// @type bool
 $useDisplayP3: true !default;
 
-/// Core color palette for light & dark appearance.
+/// Core color palette for light & dark system appearance.
 ///
 /// @since 1.0.0
 /// @type map
+/// @prop {map} light - Colors for light system appearance.
+/// @prop {color} light.[color-name] - Color value for light system appearance.
+/// @prop {map} dark - Colors for dark system appearance.
+/// @prop {color} dark.[color-name] - Color value for dark system appearance.
 $paletteCore: (
   'light': (
     'surface-primary': rgb(255 255 255),
