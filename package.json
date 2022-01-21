@@ -1,0 +1,42 @@
+{
+  "name": "@klickste/ink",
+  "version": "1.0.0",
+  "description": "Color tooling and core colors library.",
+  "license": "MIT",
+  "author": "klickste",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klickste/ink.git"
+  },
+  "files": [
+    "index.scss",
+    "core.scss",
+    "library/"
+  ],
+  "scripts": {
+    "dev": "node_modules/.bin/sass style.scss dist/style.css --no-source-map",
+    "prod": "node_modules/.bin/sass style.scss dist/style.css --style=compressed --no-source-map",
+    "watch": "node_modules/.bin/sass style.scss dist/style.css --watch --no-source-map",
+    "sync": "browser-sync start --server --files \"dist/style.css, index.html\"",
+    "start": "concurrently \"npm:sass.watch\" \"npm:browser-sync\"",
+    "format": "prettier \"**/*.{scss,js,json,md,html}\" --write",
+    "doc": "node_modules/.bin/sassdoc \"**/*.scss\" --dest ./docs"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "htmlWhitespaceSensitivity": "strict"
+  },
+  "dependencies": {
+    "sass": "^1.49.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.27.7",
+    "concurrently": "^7.0.0",
+    "install": "^0.13.0",
+    "npm": "^8.3.2",
+    "prettier": "^2.5.1",
+    "sassdoc": "^2.7.3"
+  }
+}

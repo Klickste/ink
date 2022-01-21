@@ -1,0 +1,6 @@
+@use './index' with (
+  $useDarkMode: true,
+  $useDisplayP3: true
+);
+
+@use './core';

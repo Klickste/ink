@@ -1,0 +1,57 @@
+////
+/// @group config
+/// @author cgoern
+////
+
+/// CSS selector custom properties are declared in.
+///
+/// @since 1.0.0
+/// @type string
+$root: ':root' !default;
+
+/// Whether colors should alter when entering system dark mode.
+///
+/// @since 1.0.0
+/// @type bool
+$useDarkMode: true !default;
+
+/// Whether colors should alter when display & browser supports Display P3 color space.
+///
+/// @since 1.0.0
+/// @type bool
+$useDisplayP3: true !default;
+
+/// Core color palette for light & dark appearance.
+///
+/// @since 1.0.0
+/// @type map
+$paletteCore: (
+  'light': (
+    'surface-primary': rgb(255 255 255),
+    'surface-secondary': rgb(243 243 243),
+    'surface-tertiary': rgb(255 255 255),
+    'foreground-primary': rgb(0 0 0 / 94%),
+    'foreground-secondary': rgb(62 62 62 / 68%),
+    'foreground-tertiary': rgb(62 62 62 / 42%),
+    'shade-primary': rgb(139 139 139 / 10%),
+    'shade-secondary': rgb(139 139 139 / 16%),
+    'shade-tertiary': rgb(139 139 139 / 22%),
+    'outline': rgb(99 99 99 / 16%),
+    'edge': rgb(0 0 0 / 10%),
+    'backdrop': rgb(0 0 0 / 26%),
+  ),
+  'dark': (
+    'surface-primary': rgb(0 0 0),
+    'surface-secondary': rgb(27 27 27),
+    'surface-tertiary': rgb(40 40 40),
+    'foreground-primary': rgb(255 255 255 / 94%),
+    'foreground-secondary': rgb(182 182 182 / 68%),
+    'foreground-tertiary': rgb(182 182 182 / 42%),
+    'shade-primary': rgb(99 99 99 / 26%),
+    'shade-secondary': rgb(99 99 99 / 32%),
+    'shade-tertiary': rgb(99 99 99 / 38%),
+    'outline': rgb(139 139 139 / 26%),
+    'edge': rgb(139 139 139 / 38%),
+    'backdrop': rgb(0 0 0 / 68%),
+  ),
+) !default;

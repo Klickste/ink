@@ -1,0 +1,45 @@
+////
+/// @group core
+/// @author cgoern
+////
+
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:list';
+@use 'sass:color';
+@use './library/config';
+@use './library/utils';
+
+#{config.$root} {
+  @each $colorName, $colorValue in map.get(config.$paletteCore, 'light') {
+    --ink-#{$colorName}: #{$colorValue};
+  }
+
+  @if config.$useDisplayP3 {
+    @media (color-gamut: p3) {
+      @supports (color: color(display-p3 1 1 1)) {
+        @each $colorName, $colorValue in map.get(config.$paletteCore, 'light') {
+          --ink-#{$colorName}: #{utils.colorDisplayP3($colorValue)};
+        }
+      }
+    }
+  }
+
+  @if config.$useDarkMode {
+    @media (prefers-color-scheme: dark) {
+      @each $colorName, $colorValue in map.get(config.$paletteCore, 'dark') {
+        --ink-#{$colorName}: #{$colorValue};
+      }
+    }
+
+    @if config.$useDisplayP3 {
+      @media (color-gamut: p3) and (prefers-color-scheme: dark) {
+        @supports (color: color(display-p3 1 1 1)) {
+          @each $colorName, $colorValue in map.get(config.$paletteCore, 'dark') {
+            --ink-#{$colorName}: #{utils.colorDisplayP3($colorValue)};
+          }
+        }
+      }
+    }
+  }
+}
