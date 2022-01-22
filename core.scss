@@ -11,8 +11,8 @@
 @use './library/utils';
 
 #{config.$root} {
-  @each $colorName, $colorValue in map.get(config.$paletteCore, 'light') {
-    --ink-#{$colorName}: #{$colorValue};
+  @each $name, $value in map.get(config.$paletteCore, 'light') {
+    @include utils.declareColor($name, $value);
   }
 
   @if config.$useDisplayP3 {

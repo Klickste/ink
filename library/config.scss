@@ -3,6 +3,12 @@
 /// @author cgoern
 ////
 
+/// The default namespace for CSS custom properties.
+///
+/// @since 1.0.0
+/// @type string
+$namespace: 'ink' !default;
+
 /// CSS selector custom properties are declared in.
 ///
 /// @since 1.0.0
