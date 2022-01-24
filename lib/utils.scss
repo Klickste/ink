@@ -74,7 +74,7 @@
 /// @param {string} $namespace [config.$namespace] - The namespace for the CSS custom property.
 /// @param {bool} $displayP3 [false] - Whether the given color should be converted to a Display P3 color function.
 /// @output CSS custom property
-@mixin declareColor($name, $value, $displayP3: false) {
+@mixin color($name, $value, $displayP3: false) {
   @if meta.type-of($name) != 'string' {
     @error 'Given name #{$name} is not a string.';
   } @else if meta.type-of($value) != 'color' {
@@ -86,7 +86,7 @@
   }
 }
 
-/// Declare a color
+/// Declare a color palette as a set of CSS custom proprties.
 ///
 /// @since 1.0.0
 ///
@@ -97,7 +97,7 @@
 /// @output CSS selector with custom properties
 ///
 /// @todo Check map keys & types
-@mixin declareColorPalette(
+@mixin colorPalette(
   $palette,
   $selector: config.$selector,
   $useDarkMode: config.$useDarkMode,
@@ -117,13 +117,13 @@
     @at-root {
       #{$selector} {
         @each $name, $value in map.get($palette, 'light') {
-          @include declareColor($name, $value);
+          @include color($name, $value);
         }
 
         @if $useDisplayP3 {
           @include mediaDisplayP3() {
             @each $name, $value in map.get($palette, 'light') {
-              @include declareColor($name, $value, true);
+              @include color($name, $value, true);
             }
           }
         }
@@ -131,13 +131,13 @@
         @if $useDarkMode and map.has-key($palette, 'dark') {
           @include mediaDarkMode() {
             @each $name, $value in map.get($palette, 'dark') {
-              @include declareColor($name, $value);
+              @include color($name, $value);
             }
 
             @if $useDisplayP3 {
               @include mediaDisplayP3() {
                 @each $name, $value in map.get($palette, 'dark') {
-                  @include declareColor($name, $value, true);
+                  @include color($name, $value, true);
                 }
               }
             }

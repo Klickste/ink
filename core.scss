@@ -50,4 +50,4 @@ $palette: (
   ),
 ) !default;
 
-@include utils.declareColorPalette($palette);
+@include utils.colorPalette($palette);

@@ -11,14 +11,12 @@
   "files": [
     "index.scss",
     "core.scss",
-    "library/"
+    "lib/"
   ],
   "scripts": {
     "dev": "node_modules/.bin/sass style.scss dist/style.css --no-source-map",
     "prod": "node_modules/.bin/sass style.scss dist/style.css --style=compressed --no-source-map",
     "watch": "node_modules/.bin/sass style.scss dist/style.css --watch --no-source-map",
-    "sync": "browser-sync start --server --files \"dist/style.css, index.html\"",
-    "start": "concurrently \"npm:sass.watch\" \"npm:browser-sync\"",
     "format": "prettier \"**/*.{scss,js,json,md,html}\" --write"
   },
   "prettier": {
@@ -31,10 +29,6 @@
     "sass": "^1.49.0"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.7",
-    "concurrently": "^7.0.0",
-    "install": "^0.13.0",
-    "npm": "^8.3.2",
     "prettier": "^2.5.1"
   }
 }
