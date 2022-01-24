@@ -95,6 +95,8 @@
 /// @param {bool} $useDarkMode [config.$useDarkMode] - Whether colors should alter when entering system dark mode.
 /// @param {bool} $useDisplayP3 [config.$useDisplayP3] - Whether colors should alter when display & browser supports Display P3 color space.
 /// @output CSS selector with custom properties
+///
+/// @todo Check map keys & types
 @mixin declareColorPalette(
   $palette,
   $selector: config.$selector,
@@ -103,30 +105,40 @@
 ) {
   $selector: if(& != null, &, $selector);
 
-  @at-root {
-    #{$selector} {
-      @each $name, $value in map.get($palette, 'light') {
-        @include declareColor($name, $value);
-      }
+  @if meta.type-of($palette) != 'map' {
+    @error 'Given palette #{$palette} is not a map.';
+  } @else if meta.type-of($selector) != 'string' {
+    @error 'Given selector #{$selector} is not a string.';
+  } @else if meta.type-of($useDarkMode) != 'bool' {
+    @error 'Given useDarkMode #{$useDarkMode} is not a boolean.';
+  } @else if meta.type-of($useDisplayP3) != 'bool' {
+    @error 'Given useDisplayP3 #{$useDisplayP3} is not a boolean.';
+  } @else {
+    @at-root {
+      #{$selector} {
+        @each $name, $value in map.get($palette, 'light') {
+          @include declareColor($name, $value);
+        }
 
-      @if $useDisplayP3 {
-        @include mediaDisplayP3() {
-          @each $name, $value in map.get($palette, 'light') {
-            @include declareColor($name, $value, true);
+        @if $useDisplayP3 {
+          @include mediaDisplayP3() {
+            @each $name, $value in map.get($palette, 'light') {
+              @include declareColor($name, $value, true);
+            }
           }
         }
-      }
 
-      @if $useDarkMode and map.has-key($palette, 'dark') {
-        @include mediaDarkMode() {
-          @each $name, $value in map.get($palette, 'dark') {
-            @include declareColor($name, $value);
-          }
+        @if $useDarkMode and map.has-key($palette, 'dark') {
+          @include mediaDarkMode() {
+            @each $name, $value in map.get($palette, 'dark') {
+              @include declareColor($name, $value);
+            }
 
-          @if $useDisplayP3 {
-            @include mediaDisplayP3() {
-              @each $name, $value in map.get($palette, 'dark') {
-                @include declareColor($name, $value, true);
+            @if $useDisplayP3 {
+              @include mediaDisplayP3() {
+                @each $name, $value in map.get($palette, 'dark') {
+                  @include declareColor($name, $value, true);
+                }
               }
             }
           }
