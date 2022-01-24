@@ -20,7 +20,7 @@
     "sync": "browser-sync start --server --files \"dist/style.css, index.html\"",
     "start": "concurrently \"npm:sass.watch\" \"npm:browser-sync\"",
     "format": "prettier \"**/*.{scss,js,json,md,html}\" --write",
-    "docs": "node_modules/.bin/sassdoc \"lib/*.scss\" --dest ./docs"
+    "docs": "node_modules/.bin/sassdoc \"lib/*.scss\" --dest ./docs --theme herman"
   },
   "prettier": {
     "printWidth": 100,
@@ -37,6 +37,7 @@
     "install": "^0.13.0",
     "npm": "^8.3.2",
     "prettier": "^2.5.1",
-    "sassdoc": "^2.7.3"
+    "sassdoc": "^2.7.3",
+    "sassdoc-theme-herman": "^4.0.2"
   }
 }
