@@ -1,4 +1,4 @@
-@use './index' with (
+@use './index' as ink with (
   $useDarkMode: true,
   $useDisplayP3: true
 );

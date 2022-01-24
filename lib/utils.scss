@@ -4,14 +4,16 @@
 ////
 
 @use 'sass:color';
+@use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
+@use 'sass:selector';
 @use './config';
 
 /// Convert an absolute RGB channel value to a relative decimal value.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @param {number} $channelValue - Absolute RGB channel value `(0..255)`.
 /// @return {number}
 @function calcColorChannelRelative($channelValue) {
@@ -29,7 +31,7 @@
 /// Convert an relative decimal RGB channel value to an absolute value.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @param {number} $channelValue - Relative RGB channel value `(0..1)`.
 /// @return {number}
 @function calcColorChannelAbsolute($channelValue) {
@@ -47,9 +49,8 @@
 /// Convert a color to a Display P3 color function.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @param {color} $color - A color.
-/// @require {function} calcColorChannelRelative
 /// @return {string}
 @function convertColorDisplayP3($color) {
   @if meta.type-of($color) != 'color' {
@@ -67,29 +68,79 @@
 /// Declare a named color as a CSS custom property.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @param {string} $name - The color name.
 /// @param {color} $value - The color value.
 /// @param {string} $namespace [config.$namespace] - The namespace for the CSS custom property.
+/// @param {bool} $displayP3 [false] - Whether the given color should be converted to a Display P3 color function.
 /// @output CSS custom property
-@mixin declareColor($name, $value, $namespace: config.$namespace) {
+@mixin declareColor($name, $value, $displayP3: false) {
   @if meta.type-of($name) != 'string' {
     @error 'Given name #{$name} is not a string.';
   } @else if meta.type-of($value) != 'color' {
     @error 'Given value #{$value} is not a color.';
-  } @else if meta.type-of($namespace) != 'string' {
-    @error 'Given namespace #{$namespace} not a string...';
   } @else {
-    --#{$namespace}-#{$name}: #{$value};
+    $value: if($displayP3 == true, convertColorDisplayP3($value), $value);
+
+    --#{config.$namespace}-#{$name}: #{$value};
+  }
+}
+
+/// Declare a color
+///
+/// @since 1.0.0
+///
+/// @param {map} $palette - The color palette.
+/// @param {string} $selector [config.$selector] - The CSS selector custom properties are declared in.
+/// @param {bool} $useDarkMode [config.$useDarkMode] - Whether colors should alter when entering system dark mode.
+/// @param {bool} $useDisplayP3 [config.$useDisplayP3] - Whether colors should alter when display & browser supports Display P3 color space.
+/// @output CSS selector with custom properties
+@mixin declareColorPalette(
+  $palette,
+  $selector: config.$selector,
+  $useDarkMode: config.$useDarkMode,
+  $useDisplayP3: config.$useDisplayP3
+) {
+  $selector: if(& != null, &, $selector);
+
+  @at-root {
+    #{$selector} {
+      @each $name, $value in map.get($palette, 'light') {
+        @include declareColor($name, $value);
+      }
+
+      @if $useDisplayP3 {
+        @include mediaDisplayP3() {
+          @each $name, $value in map.get($palette, 'light') {
+            @include declareColor($name, $value, true);
+          }
+        }
+      }
+
+      @if $useDarkMode and map.has-key($palette, 'dark') {
+        @include mediaDarkMode() {
+          @each $name, $value in map.get($palette, 'dark') {
+            @include declareColor($name, $value);
+          }
+
+          @if $useDisplayP3 {
+            @include mediaDisplayP3() {
+              @each $name, $value in map.get($palette, 'dark') {
+                @include declareColor($name, $value, true);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 /// Feature query for Display P3 supported browser.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @output CSS feature query
-/// @content Rules for this media query.
 @mixin supportsDisplayP3() {
   @supports (color: color(display-p3 1 1 1)) {
     @content;
@@ -99,9 +150,8 @@
 /// Media query for Display P3 capable device and supported browser.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @output CSS media query
-/// @content Rules for this media query.
 @mixin mediaDisplayP3() {
   @media (color-gamut: p3) {
     @include supportsDisplayP3() {
@@ -113,9 +163,8 @@
 /// Media query for dark system appearance.
 ///
 /// @since 1.0.0
-/// @access public
+///
 /// @output CSS media query
-/// @content Rules for this media query.
 @mixin mediaDarkMode() {
   @media (prefers-color-scheme: dark) {
     @content;

@@ -1,3 +1,8 @@
+////
+/// @group core
+/// @author cgoern
+////
+
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:list';
@@ -5,32 +10,43 @@
 @use './lib/config';
 @use './lib/utils';
 
-#{config.$root} {
-  @each $name, $value in map.get(config.$paletteCore, 'light') {
-    @include utils.declareColor($name, $value);
-  }
+/// Core color palette for light & dark system appearance.
+///
+/// @since 1.0.0
+/// @type map
+/// @prop {map} light - Colors for light system appearance.
+/// @prop {color} light.[color-name] - Color value for light system appearance.
+/// @prop {map} dark - Colors for dark system appearance.
+/// @prop {color} dark.[color-name] - Color value for dark system appearance.
+$palette: (
+  'light': (
+    'surface-primary': rgb(255 255 255),
+    'surface-secondary': rgb(243 243 243),
+    'surface-tertiary': rgb(255 255 255),
+    'foreground-primary': rgb(0 0 0 / 94%),
+    'foreground-secondary': rgb(62 62 62 / 68%),
+    'foreground-tertiary': rgb(62 62 62 / 42%),
+    'shade-primary': rgb(139 139 139 / 10%),
+    'shade-secondary': rgb(139 139 139 / 16%),
+    'shade-tertiary': rgb(139 139 139 / 22%),
+    'outline': rgb(99 99 99 / 16%),
+    'edge': rgb(0 0 0 / 10%),
+    'backdrop': rgb(0 0 0 / 26%),
+  ),
+  'dark': (
+    'surface-primary': rgb(0 0 0),
+    'surface-secondary': rgb(27 27 27),
+    'surface-tertiary': rgb(40 40 40),
+    'foreground-primary': rgb(255 255 255 / 94%),
+    'foreground-secondary': rgb(182 182 182 / 68%),
+    'foreground-tertiary': rgb(182 182 182 / 42%),
+    'shade-primary': rgb(99 99 99 / 26%),
+    'shade-secondary': rgb(99 99 99 / 32%),
+    'shade-tertiary': rgb(99 99 99 / 38%),
+    'outline': rgb(139 139 139 / 26%),
+    'edge': rgb(139 139 139 / 38%),
+    'backdrop': rgb(0 0 0 / 68%),
+  ),
+) !default;
 
-  @if config.$useDisplayP3 {
-    @include utils.mediaDisplayP3() {
-      @each $name, $value in map.get(config.$paletteCore, 'light') {
-        --ink-#{$name}: #{utils.convertColorDisplayP3($value)};
-      }
-    }
-  }
-
-  @if config.$useDarkMode {
-    @include utils.mediaDarkMode() {
-      @each $name, $value in map.get(config.$paletteCore, 'dark') {
-        --ink-#{$name}: #{$value};
-      }
-
-      @if config.$useDisplayP3 {
-        @include utils.mediaDisplayP3() {
-          @each $colorName, $colorValue in map.get(config.$paletteCore, 'dark') {
-            --ink-#{$colorName}: #{utils.convertColorDisplayP3($colorValue)};
-          }
-        }
-      }
-    }
-  }
-}
+@include utils.declareColorPalette($palette);
