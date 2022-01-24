@@ -1,14 +1,9 @@
-////
-/// @group core
-/// @author cgoern
-////
-
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:list';
 @use 'sass:color';
-@use './library/config';
-@use './library/utils';
+@use './lib/config';
+@use './lib/utils';
 
 #{config.$root} {
   @each $name, $value in map.get(config.$paletteCore, 'light') {
@@ -16,25 +11,21 @@
   }
 
   @if config.$useDisplayP3 {
-    @media (color-gamut: p3) {
-      @supports (color: color(display-p3 1 1 1)) {
-        @each $colorName, $colorValue in map.get(config.$paletteCore, 'light') {
-          --ink-#{$colorName}: #{utils.convertColorDisplayP3($colorValue)};
-        }
+    @include utils.mediaDisplayP3() {
+      @each $name, $value in map.get(config.$paletteCore, 'light') {
+        --ink-#{$name}: #{utils.convertColorDisplayP3($value)};
       }
     }
   }
 
   @if config.$useDarkMode {
-    @media (prefers-color-scheme: dark) {
-      @each $colorName, $colorValue in map.get(config.$paletteCore, 'dark') {
-        --ink-#{$colorName}: #{$colorValue};
+    @include utils.mediaDarkMode() {
+      @each $name, $value in map.get(config.$paletteCore, 'dark') {
+        --ink-#{$name}: #{$value};
       }
-    }
 
-    @if config.$useDisplayP3 {
-      @media (color-gamut: p3) and (prefers-color-scheme: dark) {
-        @supports (color: color(display-p3 1 1 1)) {
+      @if config.$useDisplayP3 {
+        @include utils.mediaDisplayP3() {
           @each $colorName, $colorValue in map.get(config.$paletteCore, 'dark') {
             --ink-#{$colorName}: #{utils.convertColorDisplayP3($colorValue)};
           }
