@@ -3,4 +3,6 @@
   $useDisplayP3: true
 );
 
-@use 'core';
+@use 'core' with (
+  $useDisplayP3: false
+);

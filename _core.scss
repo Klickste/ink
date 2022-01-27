@@ -6,6 +6,13 @@
 @use './library/config';
 @use './library/utils';
 
+/// Whether core colors should alter when display & browser supports Display P3 color space.
+///
+/// @since 1.0.2
+///
+/// @type bool
+$useDisplayP3: config.$useDisplayP3 !default;
+
 /// Core color palette for light & dark system appearance.
 ///
 /// @since 1.0.0
@@ -47,5 +54,5 @@ $palette: (
 ) !default;
 
 #{config.$selector} {
-  @include utils.colorPalette($palette, $useDisplayP3: false);
+  @include utils.colorPalette($palette, $useDisplayP3: $useDisplayP3);
 }
