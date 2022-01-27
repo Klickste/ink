@@ -3,12 +3,8 @@
 /// @author cgoern
 ////
 
-@use 'sass:map';
-@use 'sass:math';
-@use 'sass:list';
-@use 'sass:color';
-@use './lib/config';
-@use './lib/utils';
+@use './library/config';
+@use './library/utils';
 
 /// Core color palette for light & dark system appearance.
 ///
@@ -50,4 +46,6 @@ $palette: (
   ),
 ) !default;
 
-@include utils.colorPalette($palette);
+#{config.$selector} {
+  @include utils.colorPalette($palette, $useDisplayP3: false);
+}

@@ -1,6 +1,6 @@
-@use './index' as ink with (
+@use 'index' as ink with (
   $useDarkMode: true,
   $useDisplayP3: true
 );
 
-@use './core';
+@use 'core';

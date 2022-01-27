@@ -9,21 +9,20 @@
     "url": "https://github.com/klickste/ink.git"
   },
   "files": [
+    "_core.scss",
     "index.scss",
-    "core.scss",
-    "lib/"
+    "library/"
   ],
   "scripts": {
-    "dev": "node_modules/.bin/sass style.scss dist/style.css --no-source-map",
-    "prod": "node_modules/.bin/sass style.scss dist/style.css --style=compressed --no-source-map",
-    "watch": "node_modules/.bin/sass style.scss dist/style.css --watch --no-source-map",
-    "format": "prettier \"**/*.{scss,js,json,md,html}\" --write"
+    "test:dev": "node_modules/.bin/sass tests/style.scss tests/style.css --no-source-map --load-path=./",
+    "test:prod": "node_modules/.bin/sass tests/style.scss tests/style.css --style=compressed --no-source-map --load-path=./",
+    "test:watch": "node_modules/.bin/sass tests/style.scss tests/style.css --watch --no-source-map --load-path=./",
+    "format": "prettier . --write"
   },
   "prettier": {
     "printWidth": 100,
     "semi": false,
-    "singleQuote": true,
-    "htmlWhitespaceSensitivity": "strict"
+    "singleQuote": true
   },
   "dependencies": {
     "sass": "^1.49.0"

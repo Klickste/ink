@@ -22,7 +22,7 @@ Use and (optionally) configure the Sass module:
 Use the predefined core colors module:
 
 ```scss
-@use '@klickste/ink/core';
+@use '@klickste/ink/components/core';
 ```
 
 ### Use the built-in mixins
@@ -39,7 +39,9 @@ $myPalette: (
   ),
 );
 
-@include ink.colorPalette($myPalette);
+:root {
+  @include ink.colorPalette($myPalette);
+}
 ```
 
 Declare a single color:
