@@ -90,7 +90,6 @@
 /// @since 1.0.0
 ///
 /// @param {map} $palette - The color palette.
-/// @param {string} $selector [config.$selector] - The CSS selector custom properties are declared in.
 /// @param {bool} $useDarkMode [config.$useDarkMode] - Whether colors should alter when entering system dark mode.
 /// @param {bool} $useDisplayP3 [config.$useDisplayP3] - Whether colors should alter when display & browser supports Display P3 color space.
 /// @output CSS selector with custom properties
@@ -101,8 +100,6 @@
   $useDarkMode: config.$useDarkMode,
   $useDisplayP3: config.$useDisplayP3
 ) {
-  $selector: if(& != null, &, $selector);
-
   @if meta.type-of($palette) != 'map' {
     @error 'Given palette #{$palette} is not a map.';
   } @else if meta.type-of($useDarkMode) != 'bool' {
