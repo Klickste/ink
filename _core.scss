@@ -3,15 +3,17 @@
 /// @author cgoern
 ////
 
+// ==========================================================================
+// Modules
+// ==========================================================================
+
+@use 'sass:map';
 @use './library/config';
 @use './library/utils';
 
-/// Whether core colors should alter when display & browser supports Display P3 color space.
-///
-/// @since 1.0.2
-///
-/// @type bool
-$useDisplayP3: config.$useDisplayP3 !default;
+// ==========================================================================
+// Variables
+// ==========================================================================
 
 /// Core color palette for light & dark system appearance.
 ///
@@ -53,6 +55,26 @@ $palette: (
   ),
 ) !default;
 
-#{config.$selector} {
-  @include utils.colorPalette($palette, $useDisplayP3: $useDisplayP3);
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
+@mixin palette(
+  $appearance: null,
+  $useDarkMode: config.$useDarkMode,
+  $useDisplayP3: config.$useDisplayP3
+) {
+  & {
+    @if $appearance {
+      @include utils.colors(map.get($palette, $appearance), $useDisplayP3);
+    } @else {
+      @include utils.colors(map.get($palette, 'light'), $useDisplayP3);
+
+      @if $useDarkMode {
+        @include utils.mediaDarkMode {
+          @include utils.colors(map.get($palette, 'dark'), $useDisplayP3);
+        }
+      }
+    }
+  }
 }

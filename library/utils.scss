@@ -3,11 +3,19 @@
 /// @author cgoern
 ////
 
+// ==========================================================================
+// Modules
+// ==========================================================================
+
 @use 'sass:color';
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
 @use './config';
+
+// ==========================================================================
+// Functions
+// ==========================================================================
 
 /// Convert an absolute RGB channel value to a relative decimal value.
 ///
@@ -64,6 +72,10 @@
   }
 }
 
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
 /// Declare a named color as a CSS custom property.
 ///
 /// @since 1.0.0
@@ -85,54 +97,27 @@
   }
 }
 
-/// Declare a color palette as a set of CSS custom proprties.
+/// Declare a set of named colors as CSS custom proprties.
 ///
-/// @since 1.0.0
+/// @since 1.1.0
 ///
 /// @param {map} $palette - The color palette.
-/// @param {bool} $useDarkMode [config.$useDarkMode] - Whether colors should alter when entering system dark mode.
 /// @param {bool} $useDisplayP3 [config.$useDisplayP3] - Whether colors should alter when display & browser supports Display P3 color space.
 /// @output CSS selector with custom properties
-///
-/// @todo Check map keys & types
-@mixin colorPalette(
-  $palette,
-  $useDarkMode: config.$useDarkMode,
-  $useDisplayP3: config.$useDisplayP3
-) {
-  @if meta.type-of($palette) != 'map' {
+@mixin colors($colors, $useDisplayP3: config.$useDisplayP3) {
+  @if meta.type-of($colors) != 'map' {
     @error 'Given palette #{$palette} is not a map.';
-  } @else if meta.type-of($useDarkMode) != 'bool' {
-    @error 'Given useDarkMode #{$useDarkMode} is not a boolean.';
   } @else if meta.type-of($useDisplayP3) != 'bool' {
     @error 'Given useDisplayP3 #{$useDisplayP3} is not a boolean.';
   } @else {
-    & {
-      @each $name, $value in map.get($palette, 'light') {
-        @include color($name, $value);
-      }
+    @each $name, $value in $colors {
+      @include color($name, $value);
+    }
 
-      @if $useDisplayP3 {
-        @include mediaDisplayP3() {
-          @each $name, $value in map.get($palette, 'light') {
-            @include color($name, $value, true);
-          }
-        }
-      }
-
-      @if $useDarkMode and map.has-key($palette, 'dark') {
-        @include mediaDarkMode() {
-          @each $name, $value in map.get($palette, 'dark') {
-            @include color($name, $value);
-          }
-
-          @if $useDisplayP3 {
-            @include mediaDisplayP3() {
-              @each $name, $value in map.get($palette, 'dark') {
-                @include color($name, $value, true);
-              }
-            }
-          }
+    @if $useDisplayP3 {
+      @include mediaDisplayP3() {
+        @each $name, $value in $colors {
+          @include color($name, $value, true);
         }
       }
     }
@@ -144,7 +129,7 @@
 /// @since 1.0.0
 ///
 /// @output CSS feature query
-@mixin supportsDisplayP3() {
+@mixin supportsDisplayP3 {
   @supports (color: color(display-p3 1 1 1)) {
     @content;
   }
@@ -155,7 +140,7 @@
 /// @since 1.0.0
 ///
 /// @output CSS media query
-@mixin mediaDisplayP3() {
+@mixin mediaDisplayP3 {
   @media (color-gamut: p3) {
     @include supportsDisplayP3() {
       @content;
@@ -168,7 +153,7 @@
 /// @since 1.0.0
 ///
 /// @output CSS media query
-@mixin mediaDarkMode() {
+@mixin mediaDarkMode {
   @media (prefers-color-scheme: dark) {
     @content;
   }

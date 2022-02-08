@@ -1,8 +1,14 @@
-@use 'index' as ink with (
-  $useDarkMode: true,
-  $useDisplayP3: true
-);
+@use 'index' as ink;
+@use 'core';
 
-@use 'core' with (
-  $useDisplayP3: false
-);
+:root {
+  @include core.palette($useDisplayP3: false);
+}
+
+.error {
+  @include ink.colors(
+    (
+      'fire': rgb(255, 62, 0),
+    )
+  );
+}
