@@ -3,6 +3,7 @@
 Color tooling and core colors library.
 
 [![npm publish](https://github.com/klickste/ink/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/klickste/ink/actions/workflows/npm-publish.yml)
+![npm (scoped)](https://img.shields.io/npm/v/@klickste/ink)
 
 ## Usage
 
@@ -22,7 +23,11 @@ Use and (optionally) configure the Sass module:
 Use the predefined core colors module:
 
 ```scss
-@use '@klickste/ink/components/core';
+@use '@klickste/ink/core';
+
+:root {
+  @include core.palette;
+}
 ```
 
 ### Use the built-in mixins
@@ -40,7 +45,7 @@ $myPalette: (
 );
 
 :root {
-  @include ink.colorPalette($myPalette);
+  @include ink.colors($myPalette);
 }
 ```
 
