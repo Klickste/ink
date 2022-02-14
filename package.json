@@ -10,6 +10,7 @@
   },
   "files": [
     "_core.scss",
+    "_gray.scss",
     "index.scss",
     "library/"
   ],

@@ -1,8 +1,10 @@
 @use 'index' as ink;
 @use 'core';
+@use 'gray';
 
 :root {
   @include core.palette($useDisplayP3: false);
+  @include gray.palette($useDisplayP3: false);
 }
 
 .error {
