@@ -14,19 +14,20 @@ Use and (optionally) configure the Sass module:
 ```scss
 @use '@klickste/ink' with (
   $namespace: 'acme',
-  $selector: 'body',
   $useDarkMode: false,
   $useDisplayP3: false
 );
 ```
 
-Use the predefined core colors module:
+Use the predefined modules:
 
 ```scss
 @use '@klickste/ink/core';
+@use '@klickste/ink/gray';
 
 :root {
   @include core.palette;
+  @include gray.palette;
 }
 ```
 
