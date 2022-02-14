@@ -15,7 +15,7 @@
 // Variables
 // ==========================================================================
 
-/// Core color palette for light & dark system appearance.
+/// Core colors palette for light & dark system appearance.
 ///
 /// @since 1.0.0
 ///
@@ -64,16 +64,14 @@ $palette: (
   $useDarkMode: config.$useDarkMode,
   $useDisplayP3: config.$useDisplayP3
 ) {
-  & {
-    @if $appearance {
-      @include utils.colors(map.get($palette, $appearance), $useDisplayP3);
-    } @else {
-      @include utils.colors(map.get($palette, 'light'), $useDisplayP3);
+  @if $appearance {
+    @include utils.colors(map.get($palette, $appearance), $useDisplayP3);
+  } @else {
+    @include utils.colors(map.get($palette, 'light'), $useDisplayP3);
 
-      @if $useDarkMode {
-        @include utils.mediaDarkMode {
-          @include utils.colors(map.get($palette, 'dark'), $useDisplayP3);
-        }
+    @if $useDarkMode {
+      @include utils.mediaDarkMode {
+        @include utils.colors(map.get($palette, 'dark'), $useDisplayP3);
       }
     }
   }
