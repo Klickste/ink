@@ -33,16 +33,12 @@ Use the predefined modules:
 
 ### Use the built-in mixins
 
-Declare your own color palette:
+Declare multiple colors:
 
 ```scss
 $myPalette: (
-  'light': (
-    'brand': rgb(242 59 34),
-  ),
-  'dark': (
-    'brand': rgb(222 35 19),
-  ),
+  'brand': rgb(242 59 34),
+  'accent': rgb(52 195 117),
 );
 
 :root {
