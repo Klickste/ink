@@ -9,8 +9,10 @@
     "url": "https://github.com/klickste/ink.git"
   },
   "files": [
+    "_black.scss",
     "_core.scss",
     "_gray.scss",
+    "_white.scss",
     "index.scss",
     "library/"
   ],
@@ -25,10 +27,8 @@
     "semi": false,
     "singleQuote": true
   },
-  "dependencies": {
-    "sass": "^1.49.0"
-  },
   "devDependencies": {
-    "prettier": "^2.5.1"
+    "prettier": "^2.6.2",
+    "sass": "^1.51.0"
   }
 }
